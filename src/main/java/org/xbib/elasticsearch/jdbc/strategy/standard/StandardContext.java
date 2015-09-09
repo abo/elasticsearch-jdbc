@@ -377,9 +377,10 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
         boolean shouldPrepareDatabaseMetadata = XContentMapValues.nodeBooleanValue(params.get("prepare_database_metadata"), false);
         boolean shouldPrepareResultSetMetadata = XContentMapValues.nodeBooleanValue(params.get("prepare_resultset_metadata"), false);
         Map<String, Object> columnNameMap = (Map<String, Object>) params.get("column_name_map");
+        Map<String, Object> rowDefault = (Map<String, Object>) params.get("row_default");
         int queryTimeout = XContentMapValues.nodeIntegerValue(params.get("query_timeout"), 1800);
         Map<String, Object> connectionProperties = (Map<String, Object>) params.get("connection_properties");
-        boolean shouldTreatBinaryAsString = XContentMapValues.nodeBooleanValue(params.get("treat_binary_as_string"), false);
+        boolean shouldTreatBinaryAsString = XContentMapValues.nodeBooleanValue(params.get("treat_binary_as_string"), false);        
         source.setRounding(rounding)
                 .setScale(scale)
                 .setStatements(sql)
@@ -396,6 +397,7 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
                 .shouldPrepareDatabaseMetadata(shouldPrepareDatabaseMetadata)
                 .shouldPrepareResultSetMetadata(shouldPrepareResultSetMetadata)
                 .setColumnNameMap(columnNameMap)
+                .setRowDefault(rowDefault)
                 .setQueryTimeout(queryTimeout)
                 .setConnectionProperties(connectionProperties)
                 .shouldTreatBinaryAsString(shouldTreatBinaryAsString);

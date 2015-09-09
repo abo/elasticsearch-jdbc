@@ -312,4 +312,10 @@ public class MockJDBCSource implements JDBCSource<MockContext> {
         return null;
     }
 
+	@Override
+	public JDBCSource<MockContext> setRowDefault(Map<String, Object> row) {
+		// TODO Auto-generated method stub
+		return this;
+	}
+
 }
