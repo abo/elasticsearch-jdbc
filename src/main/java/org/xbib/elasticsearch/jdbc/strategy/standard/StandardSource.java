@@ -128,6 +128,7 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
     private Map<String, Object> columnNameMap;
 
     private Map<String, Object> lastRow = new HashMap<String, Object>();
+    private Map<String, Object> defaultRow = new HashMap<String, Object>();
 
     private List<SQLCommand> sql;
 
@@ -384,7 +385,17 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
 
     public StandardSource<C>  setLastRow(Map<String, Object> lastRow) {
         this.lastRow = lastRow;
+        for(String k : this.defaultRow.keySet()){
+        	if(!this.lastRow.containsKey(k)){
+        		this.lastRow.put(k, this.defaultRow.get(k));
+        	}
+        }
         return this;
+    }
+    
+    public StandardSource<C> setRowDefault(Map<String, Object> row){
+    	this.defaultRow = row;
+    	return this;
     }
 
     public Map<String, Object> getLastRow() {

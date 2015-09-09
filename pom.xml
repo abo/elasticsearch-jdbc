@@ -74,6 +74,7 @@
         <java.compiler.version>1.7</java.compiler.version>
         <elasticsearch.version>1.7.0</elasticsearch.version>
         <org.xbib.elasticsearch.support.version>1.7.0.0</org.xbib.elasticsearch.support.version>
+        <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
 
     <dependencies>
