@@ -308,4 +308,9 @@ public class MockJDBCSource implements JDBCSource<MockContext> {
 		return this;
 	}
 
+    @Override
+    public JDBCSource<MockContext> setRowExtend(Map<String, Object> params) {
+        return this;
+    }
+
 }
