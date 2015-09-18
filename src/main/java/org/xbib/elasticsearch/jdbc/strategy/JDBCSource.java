@@ -221,6 +221,7 @@ public interface JDBCSource<C extends Context> extends Source<C> {
     JDBCSource<C> setColumnNameMap(Map<String, Object> columnNameMap);
     
     JDBCSource<C> setRowDefault(Map<String, Object> row);
+    JDBCSource<C> setRowExtend(Map<String, Object> params);
 
     /**
      * Should binary types (byte arrays) be treated as JSON strings

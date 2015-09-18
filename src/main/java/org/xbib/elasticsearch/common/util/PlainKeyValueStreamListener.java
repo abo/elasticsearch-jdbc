@@ -118,6 +118,23 @@ public class PlainKeyValueStreamListener<K, V> implements KeyValueStreamListener
         return this;
     }
 
+    @Override
+    public List<K> getKeys() {
+        return keys;
+    }
+
+    @Override
+    public KeyValueStreamListener<K, V> appendKeys(List<K> extKeys) {
+        this.keys.addAll(extKeys);
+        return this;
+    }
+
+    @Override
+    public KeyValueStreamListener<K, V> appendKey(K extKey) {
+        this.keys.add(extKey);
+        return this;
+    }
+
     /**
      * Receive values.
      *
