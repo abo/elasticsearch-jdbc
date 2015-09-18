@@ -323,4 +323,9 @@ public class MockJDBCSource implements JDBCSource<MockContext> {
         return this;
     }
 
+    @Override
+    public JDBCSource<MockContext> setRowMax(Map<String, Object> init) {
+        return this;
+    }
+
 }

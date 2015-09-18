@@ -132,6 +132,7 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
 
     private Map<String, Object> lastRow = new HashMap<String, Object>();
     private Map<String, Object> defaultRow = new HashMap<String, Object>();
+    private Map<String, Object> rowMax = new HashMap<String,Object>();
     private FieldExtender rowExtender = null;
 
 
@@ -423,6 +424,15 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
             this.defaultRow = new HashMap<String, Object>();
         }
     	return this;
+    }
+
+    public StandardSource<C> setRowMax(Map<String, Object> init){
+        if( init != null) {
+            for(Map.Entry<String, Object> entry : init.entrySet()){
+                this.rowMax.put("$max."+entry.getKey(), entry.getValue());
+            }
+        }
+        return this;
     }
 
     public StandardSource<C> setRowExtend(Map<String, Object> params){
@@ -765,7 +775,7 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
                 statement = prepareUpdate(command.getSQL());
                 bind(statement, command.getParameters());
                 executeUpdate(statement);
-            }
+            }            
         } finally {
             close(results);
             close(statement);
@@ -1136,17 +1146,23 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
     }
 
     private Object max(Object a, Object b){
-        if(a instanceof String){
-            return ((String) a).compareTo((String) b) >=0 ? a : b;
-        }else if(a instanceof Long){
-            return ((Long)a) >= (Long)b ? a : b;
-        }else if(a instanceof Integer){
-            return ((Integer)a) >= (Integer)b ? a : b;
-        }else if(a instanceof Double){
-            return ((Double) a) >= (Double)b ? a :b;
-        }else{
+        if(a == null) {
             return b;
         }
+
+        try {
+            if (a instanceof String) {
+                return ((String) a).compareTo((String) b) >= 0 ? a : b;
+            } else if (a instanceof Long) {
+                return ((Long) a) >= (Long) b ? a : b;
+            } else if (a instanceof Integer) {
+                return ((Integer) a) >= (Integer) b ? a : b;
+            } else if (a instanceof Double) {
+                return ((Double) a) >= (Double) b ? a : b;
+            }
+        }catch(Exception e){
+        }
+        return a;
     }
 
     @SuppressWarnings({"unchecked"})
@@ -1164,6 +1180,9 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
                 }
                 values.add(value);
                 getLastRow().put("$row." + metadata.getColumnLabel(i), value);
+                if(rowMax.containsKey("$max."+metadata.getColumnLabel(i))){
+                    rowMax.put("$max."+metadata.getColumnLabel(i), max(value, rowMax.get("$max."+metadata.getColumnLabel(i))));
+                }
                 if (value != null && metric != null) {
                     metric.getTotalSizeInBytes().inc(value.toString().length());
                 }
@@ -1393,12 +1412,24 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
             } else {
                 Object rowValue = getLastRow().get(s);
                 if (rowValue != null) {
-                    statement.setObject(i, rowValue);
+                    simpleBind(statement, i , rowValue);
+                    //statement.setObject(i, rowValue);
+                }else if(rowMax.containsKey(s)){
+                    simpleBind(statement, i, rowMax.get(s));
+                    //statement.setObject(i, rowMax.get(s));
                 } else {
                     statement.setString(i, (String) value);
                 }
             }
-        } else if (value instanceof Integer) {
+        } else{
+            simpleBind(statement, i, value);
+        }
+    }
+
+    private void simpleBind(PreparedStatement statement, int i , Object value) throws SQLException {
+        if(value instanceof String){
+            statement.setString(i, (String) value);
+        }else if (value instanceof Integer) {
             statement.setInt(i, (Integer) value);
         } else if (value instanceof Long) {
             statement.setLong(i, (Long) value);
