@@ -147,6 +147,11 @@
             <version>6.8.21</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -285,6 +290,12 @@
                                     <groupId>org.xbib.jdbc</groupId>
                                     <artifactId>jdbc-driver-csv</artifactId>
                                     <version>1.0.0</version>
+                                    <outputDirectory>${basedir}/lib</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.google.guava</groupId>
+                                    <artifactId>guava</artifactId>
+                                    <version>18.0</version>
                                     <outputDirectory>${basedir}/lib</outputDirectory>
                                 </artifactItem>
                             </artifactItems>

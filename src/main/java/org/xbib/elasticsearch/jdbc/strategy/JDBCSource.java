@@ -206,6 +206,7 @@ public interface JDBCSource<C extends Context> extends Source<C> {
     
     JDBCSource<C> setRowDefault(Map<String, Object> row);
     JDBCSource<C> setRowExtend(Map<String, Object> params);
+    JDBCSource<C> setRowMax(Map<String, Object> init);
 
     /**
      * Should binary types (byte arrays) be treated as JSON strings
