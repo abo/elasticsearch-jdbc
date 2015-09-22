@@ -74,6 +74,7 @@
         <java.compiler.version>1.7</java.compiler.version>
         <elasticsearch.version>1.7.0</elasticsearch.version>
         <org.xbib.elasticsearch.support.version>1.7.0.0</org.xbib.elasticsearch.support.version>
+        <additionalparam>-Xdoclint:none</additionalparam>
     </properties>
 
     <dependencies>
@@ -145,6 +146,11 @@
             <artifactId>testng</artifactId>
             <version>6.8.21</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
         </dependency>
     </dependencies>
 
@@ -284,6 +290,12 @@
                                     <groupId>org.xbib.jdbc</groupId>
                                     <artifactId>jdbc-driver-csv</artifactId>
                                     <version>1.0.0</version>
+                                    <outputDirectory>${basedir}/lib</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.google.guava</groupId>
+                                    <artifactId>guava</artifactId>
+                                    <version>18.0</version>
                                     <outputDirectory>${basedir}/lib</outputDirectory>
                                 </artifactItem>
                             </artifactItems>

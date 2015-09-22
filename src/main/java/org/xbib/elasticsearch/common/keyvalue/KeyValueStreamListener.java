@@ -47,6 +47,12 @@ public interface KeyValueStreamListener<K, V> {
      */
     KeyValueStreamListener<K, V> keys(List<K> keys) throws IOException;
 
+    List<K> getKeys();
+
+    KeyValueStreamListener<K, V> appendKeys(List<K> extKeys);
+
+    KeyValueStreamListener<K, V> appendKey(K extKey);
+
     /**
      * Receive values for the declared keys
      *

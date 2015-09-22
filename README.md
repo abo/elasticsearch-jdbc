@@ -1,3 +1,24 @@
+# fork for my incremental import
+	* row_max
+		...
+		"sql":[{..."parameter":["$max.join_time"]}],
+		"row_max":{
+        		"join_time":"2015-07-25 00:00:00"
+        },...
+
+	* field_extender
+		...
+		"row_extend":{
+        		"type":"siteid_extender",
+        		"url":"jdbc:mysql://127.0.0.1:3306/webcast",
+        		"username":"root",
+        		"password":"",
+        		"sql":"select site_id from gs_webcast_published where id=?",
+        		"parameter":["conf_id"]
+        },
+		...
+
+
 ![JDBC](https://github.com/jprante/elasticsearch-jdbc/raw/master/src/site/resources/database-128.png)
 
 Image by [icons8](http://www.iconsdb.com/icons8/?icon=database) Creative Commons Attribution-NoDerivs 3.0 Unported.
