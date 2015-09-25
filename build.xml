@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ====================================================================== -->
+<!-- Ant build file (http://ant.apache.org/) for Ant 1.6.2 or above.        -->
+<!-- ====================================================================== -->
+
+<project name="elasticsearch-jdbc" default="package" basedir=".">
+
+  <property name="maven.mode.offline" value="true" />
+  <property name="maven.repo.local" value="${basedir}/libs" />
+
+  <!-- ====================================================================== -->
+  <!-- Import maven-build.xml into the current project                        -->
+  <!-- ====================================================================== -->
+
+  <import file="maven-build.xml"/>
+  
+  <!-- ====================================================================== -->
+  <!-- Help target                                                            -->
+  <!-- ====================================================================== -->
+
+  <target name="help">
+    <echo message="Please run: $ant -projecthelp"/>
+  </target>
+
+  <target name="uberjar" depends="package">
+    <jar jarfile="${basedir}/lib/${maven.build.finalName}-uber.jar">
+      <zipgroupfileset dir="${basedir}/libs">
+        <include name="org/xbib/elasticsearch/plugin/elasticsearch-support/**/*.jar" />
+        <include name="org/elasticsearch/elasticsearch/**/*.jar" />
+        <include name="com/google/guava/guava/**/*.jar" />
+        <include name="org/apache/lucene/lucene-core/**/*.jar" />
+        <include name="org/apache/logging/log4j/**/*.jar" />
+        <include name="org/slf4j/slf4j-api/**/*.jar" />
+        <include name="com/spatial4j/spatial4j/**/*.jar" />
+        <include name="com/vividsolutions/jts/**/*.jar" />
+      </zipgroupfileset>
+      <zipfileset src="${maven.build.dir}/${maven.build.finalName}.jar" />
+    </jar>
+  </target>
+
+  <target name="dist" depends="cleandist,uberjar">
+    <copy todir="${basedir}/lib" flatten="true" >
+      <fileset dir="${basedir}/libs">
+        <include name="com/h2database/h2/1.4.181/*.jar" />
+        <include name="org/hsqldb/hsqldb/2.3.2/*.jar" />
+        <include name="mysql/mysql-connector-java/5.1.33/*.jar"/>
+        <include name="org/postgresql/postgresql/9.3-1102-jdbc41/*.jar" />
+        <include name="org/apache/derby/derby/10.11.1.1/*.jar" />
+        <include name="org/xbib/jdbc/jdbc-driver-csv/1.0.0/*.jar" />
+      </fileset>
+    </copy>
+
+    <zip destfile="${basedir}/dist/${maven.build.finalName}.zip">
+      <zipfileset dir="${basedir}/bin" prefix="bin" />
+      <zipfileset dir="${basedir}/lib" prefix="lib" />
+      <zipfileset dir="${basedir}" includes="LICENSE.*" />
+    </zip>
+  </target>
+
+  <target name="cleandist">
+    <delete dir="${maven.build.dir}" />
+    <delete dir="${basedir}/lib" />
+    <delete dir="${basedir}/dist" />
+  </target>
+</project>
