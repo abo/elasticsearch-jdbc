@@ -1,0 +1,20 @@
+{
+  "type" : "jdbc",
+  "jdbc" : {
+    "url" : "jdbc:mysql://127.0.0.1:3306/webcastingraw",
+    "user" : "root",
+    "password" : "",
+    "sql" : [{
+      "statement":"select *,concat(conf_id,unix_timestamp(start_time)) as _id, date_format(convert_tz(start_time,'+00:00','+08:00'), '%Y-%m-%dT%T.000+08:00') as start_time_local from tn_confstat where start_time >= ?",
+      "parameter":["$max.start_time"]
+    }],
+    "row_max":{
+      "start_time":"2015-07-25 00:00:00"
+    },
+    "timezone":"GMT",
+    "resultset_concurrency":"CONCUR_READ_ONLY",
+    "elasticsearch.cluster":"webdevstat",
+    "index": "mytest",
+    "type": "tn_confstat"
+  }
+}

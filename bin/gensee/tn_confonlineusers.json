@@ -1,0 +1,20 @@
+{
+  "type" : "jdbc",
+  "jdbc" : {
+    "url" : "jdbc:mysql://127.0.0.1:3306/webcastingraw",
+    "user" : "root",
+    "password" : "",
+    "sql" : [{
+      "statement":"select *,concat(conf_id,unix_timestamp(timestamp)) as _id, date_format(convert_tz(timestamp,'+00:00','+08:00'), '%Y-%m-%dT%T.000+08:00') as timestamp_local from tn_confonlineusers where timestamp >= ?",
+      "parameter":["$max.timestamp"]
+    }],
+    "row_max":{
+      "timestamp":"2015-07-25 00:00:00"
+    },
+    "timezone":"GMT",
+    "resultset_concurrency":"CONCUR_READ_ONLY",
+    "elasticsearch.cluster":"webdevstat",
+    "index": "mytest",
+    "type": "tn_confonlineusers"
+  }
+}
