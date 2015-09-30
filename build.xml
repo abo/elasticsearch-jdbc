@@ -4,7 +4,7 @@
 <!-- Ant build file (http://ant.apache.org/) for Ant 1.6.2 or above.        -->
 <!-- ====================================================================== -->
 
-<project name="elasticsearch-jdbc" default="package" basedir=".">
+<project name="elasticsearch-jdbc" default="dist" basedir=".">
 
   <property name="maven.mode.offline" value="true" />
   <property name="maven.repo.local" value="${basedir}/libs" />
