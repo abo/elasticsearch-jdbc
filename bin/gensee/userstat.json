@@ -21,8 +21,7 @@
       "parameter":["conf_id"]
     },
     "resultset_concurrency":"CONCUR_READ_ONLY",
-    "elasticsearch.cluster":"webdevstat",
-    "index": "mytest",
+    "index": "gensee",
     "type": "userstat"
   }
 }

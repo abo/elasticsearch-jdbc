@@ -41,22 +41,22 @@ public class JDBCImporter extends Importer {
 
     private final static Logger logger = LogManager.getLogger("importer.jdbc");
 
-    private final static JDBCImporter INSTANCE = new JDBCImporter();
+//    private final static JDBCImporter INSTANCE = new JDBCImporter();
 
     protected Context context;
 
     private volatile boolean closed;
 
-    public static JDBCImporter getInstance() {
-        return INSTANCE;
-    }
+//    public static JDBCImporter getInstance() {
+//        return INSTANCE;
+//    }
 
     @Override
     protected PipelineProvider<Pipeline> pipelineProvider() {
         return new PipelineProvider<Pipeline>() {
             @Override
             public Pipeline get() {
-                return INSTANCE;
+                return JDBCImporter.this;
             }
         };
     }
@@ -129,8 +129,8 @@ public class JDBCImporter extends Importer {
 
     public Set<Context.State> getStates() {
         Set<Context.State> states = new HashSet<>();
-        if (INSTANCE.getContext() != null) {
-            states.add(INSTANCE.getContext().getState());
+        if (this.getContext() != null) {
+            states.add(this.getContext().getState());
         }
         return states;
     }

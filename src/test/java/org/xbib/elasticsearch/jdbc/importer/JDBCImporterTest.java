@@ -8,7 +8,7 @@ import org.xbib.tools.JDBCImporter;
 public class JDBCImporterTest {
 
     public void testImporter() throws Exception {
-        final JDBCImporter importer = JDBCImporter.getInstance();
+        final JDBCImporter importer = new JDBCImporter();// JDBCImporter.getInstance();
         Settings settings = ImmutableSettings.settingsBuilder()
                 .put("url", "jdbc:mysql://localhost:3306/test")
                 .put("password", "")

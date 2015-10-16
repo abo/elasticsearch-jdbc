@@ -13,8 +13,7 @@
     },
     "timezone":"GMT",
     "resultset_concurrency":"CONCUR_READ_ONLY",
-    "elasticsearch.cluster":"webdevstat",
-    "index": "mytest",
+    "index": "gensee",
     "type": "tn_confonlineusers"
   }
 }
